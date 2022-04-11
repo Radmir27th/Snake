@@ -136,6 +136,8 @@ int main()
                     tail.push_back(Tail{ -10,-10 });
                 }
                 for (auto& vec : tail) {
+                    if (hY == vec.y && hX == vec.x)
+                        window.close();
                     if (i == vec.y && j == vec.x) {
                         grid[i][j].cell.setFillColor(Color::Red);
                         grid[i][j].cell.setOutlineColor(Color::Red);

@@ -139,7 +139,7 @@ int main()
                     if (hY == vec.y && hX == vec.x)
                         window.close();
                     if (i == vec.y && j == vec.x) {
-                        grid[i][j].cell.setFillColor(Color::Red);
+                        grid[i][j].cell.setFillColor(Color::Green);
                         grid[i][j].cell.setOutlineColor(Color::Red);
                     }
                 }

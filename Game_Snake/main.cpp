@@ -22,6 +22,7 @@ struct Cell {
 struct Tail {
     int x;
     int y;
+    int z;
 };
 
 

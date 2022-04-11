@@ -1,0 +1,11 @@
+/Game_Snake/Debug
+/Game_Snake/lib
+/Game_Snake/include
+/Debug
+Game_Snake.sln
+.vs/
+/x64
+/Game_Snake/x64
+/Game_Snake/Game_Snake.vcxproj
+/Game_Snake/Game_Snake.vcxproj.filters
+/Game_Snake/Game_Snake.vcxproj.user

@@ -45,7 +45,7 @@ int main()
     int gx = 30, gy = 30;
     Derection der = Derection::STOP;
     
-    RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
+    RenderWindow window(sf::VideoMode(1000, 720), "SFML window");
     
     std::vector<std::vector<Cell>> grid(600/30);
     for (int i = 0; i < grid.size(); ++i) {
@@ -119,31 +119,40 @@ int main()
         // Clear screen
         window.clear(Color::Black);
        
-        for (int i = 0; i < grid.size(); ++i) {
-            for (int j = 0; j < grid[i].size(); ++j) {
-                grid[i][j].cell.setFillColor(Color::Black);
-                grid[i][j].cell.setOutlineColor(Color::Black);
-                if (i == hY && j == hX) {
-                    grid[i][j].cell.setFillColor(Color::Red);
-                    grid[i][j].cell.setOutlineColor(Color::Red);
+       
+        for (int y = 0; y < grid.size(); ++y) {
+            for (int x = 0; x < grid[y].size(); ++x) {
+                grid[y][x].cell.setFillColor(Color::Black);
+                grid[y][x].cell.setOutlineColor(Color::Black);
+                if (hY == 0)
+                    hY = grid.size() - 1;
+                if (hY > grid.size() - 1)
+                    hY = 1;
+                if (hX == 0)
+                    hX = grid[y].size() - 1;
+                if (hX > grid[y].size() - 1)
+                    hX = 1;
+                if (y == hY && x == hX) {
+                    grid[y][x].cell.setFillColor(Color::Red);
+                    grid[y][x].cell.setOutlineColor(Color::Red);
                 }
-                if (i == pY && j == pX)
-                    grid[i][j].cell.setFillColor(Color::Yellow);
+                if (y == pY && x == pX)
+                    grid[y][x].cell.setFillColor(Color::Yellow);
                 if (hY == pY && hX == pX) {
-                    grid[i][j].cell.setFillColor(Color::White);
-                    pY = rand() % 20;
-                    pX = rand() % 20;
+                    grid[y][x].cell.setFillColor(Color::White);
+                    pY = rand() % 18;
+                    pX = rand() % 18;
                     tail.push_back(Tail{ -10,-10 });
                 }
                 for (auto& vec : tail) {
                     if (hY == vec.y && hX == vec.x)
                         window.close();
-                    if (i == vec.y && j == vec.x) {
-                        grid[i][j].cell.setFillColor(Color::Red);
-                        grid[i][j].cell.setOutlineColor(Color::Red);
+                    if (y == vec.y && x == vec.x) {
+                        grid[y][x].cell.setFillColor(Color::Red);
+                        grid[y][x].cell.setOutlineColor(Color::Red);
                     }
                 }
-                window.draw(grid[i][j].cell);
+                window.draw(grid[y][x].cell);
 
             }
         }

@@ -41,32 +41,36 @@ void expand_tail(std::vector<Tail> &tail, int x, int y) {
 
 int main()
 {
+    const int X = 720;
+    const int Y = 720;
     srand(time(0));
-    int gx = 30, gy = 30;
+    int gx = 0, gy = 0;
     Derection der = Derection::STOP;
     
-    RenderWindow window(sf::VideoMode(1000, 720), "SFML window");
+    RenderWindow window(sf::VideoMode(X, Y), "SFML window");
     
-    std::vector<std::vector<Cell>> grid(600/30);
+    std::vector<std::vector<Cell>> grid(Y/30);
     for (int i = 0; i < grid.size(); ++i) {
-        grid[i].resize(800 / 30);
+        grid[i].resize(X / 30);
+        
         for (int j = 0; j < grid[i].size(); ++j) {
-            gx += 30;
             grid[i][j].cell.setPosition(gx, gy);
-
+            gx += 30;
         }
         gy += 30;
-        gx = 30;
+        gx = 0;
     }
 
-    unsigned int hX = 10;
-    unsigned int hY = 10;
+     int hX = 10;
+     int hY = 10;
 
     std::vector<Tail> tail;
 
-    int pX = rand() % 20;
-    int pY = rand() % 20;
+    int pX = 1 + rand() % 22;
+    int pY = 1 + rand() % 22;
     int time = 0;
+   
+
     while (window.isOpen())
     {
         // Process events
@@ -116,19 +120,20 @@ int main()
         }
         time++;
 
+        
         // Clear screen
         window.clear(Color::Black);
        
-       
+        
         for (int y = 0; y < grid.size(); ++y) {
             for (int x = 0; x < grid[y].size(); ++x) {
                 grid[y][x].cell.setFillColor(Color::Black);
                 grid[y][x].cell.setOutlineColor(Color::Black);
-                if (hY == 0)
+                if (hY <= 0)
                     hY = grid.size() - 1;
                 if (hY > grid.size() - 1)
                     hY = 1;
-                if (hX == 0)
+                if (hX <= 0)
                     hX = grid[y].size() - 1;
                 if (hX > grid[y].size() - 1)
                     hX = 1;
@@ -140,8 +145,8 @@ int main()
                     grid[y][x].cell.setFillColor(Color::Yellow);
                 if (hY == pY && hX == pX) {
                     grid[y][x].cell.setFillColor(Color::White);
-                    pY = rand() % 18;
-                    pX = rand() % 18;
+                    pY = 1 + rand() % 17;
+                    pX = 1 + rand() % 22;
                     tail.push_back(Tail{ -10,-10 });
                 }
                 for (auto& vec : tail) {
@@ -152,6 +157,8 @@ int main()
                         grid[y][x].cell.setOutlineColor(Color::Red);
                     }
                 }
+                if (y == 0 || y == grid.size() - 1 || x == 0 || x == X / 30 - 1)
+                    grid[y][x].cell.setFillColor(Color::White);
                 window.draw(grid[y][x].cell);
 
             }

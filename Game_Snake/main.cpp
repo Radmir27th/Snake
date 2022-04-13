@@ -1,5 +1,3 @@
-#include <iostream>
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
 using namespace sf;
@@ -11,7 +9,6 @@ enum Derection {
     RIGHT,
     STOP
 };
-
 
 struct Cell {
     RectangleShape cell;
@@ -47,7 +44,7 @@ int main()
     int gx = 0, gy = 0;
     Derection der = Derection::STOP;
     
-    RenderWindow window(sf::VideoMode(X, Y), "SFML window");
+    RenderWindow window(sf::VideoMode(X, Y), "Snake");
     
     std::vector<std::vector<Cell>> grid(Y/30);
     for (int i = 0; i < grid.size(); ++i) {
@@ -74,13 +71,13 @@ int main()
     while (window.isOpen())
     {
         // Process events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        //sf::Event event;
+        //while (window.pollEvent(event))
+        //{
+        //    // Close window: exit
+        //    if (event.type == sf::Event::Closed)
+        //        window.close();
+        //}
 
         //logic
         if (!(der == RIGHT || der == LEFT)) {
@@ -124,18 +121,17 @@ int main()
         // Clear screen
         window.clear(Color::Black);
        
-        
         for (int y = 0; y < grid.size(); ++y) {
             for (int x = 0; x < grid[y].size(); ++x) {
                 grid[y][x].cell.setFillColor(Color::Black);
                 grid[y][x].cell.setOutlineColor(Color::Black);
-                if (hY <= 0)
-                    hY = grid.size() - 1;
-                if (hY > grid.size() - 1)
+                if (hY == 0)
+                    hY = grid.size() - 2;
+                if (hY == grid.size() - 1)
                     hY = 1;
-                if (hX <= 0)
-                    hX = grid[y].size() - 1;
-                if (hX > grid[y].size() - 1)
+                if (hX == 0)
+                    hX = grid[y].size() - 2;
+                if (hX == grid[y].size() - 1)
                     hX = 1;
                 if (y == hY && x == hX) {
                     grid[y][x].cell.setFillColor(Color::Red);
